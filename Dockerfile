@@ -10,6 +10,7 @@ EXPOSE 80
 
 # Adding Oracle Install from oracle.com
 ADD rpm/* /tmp/
+RUN cd /tmp && cat aa ab ac ad > oracle-xe-11.2.0-1.0.x86_64.rpm && rm -rf aa ab ac ad
 
 # Pre-requirements
 RUN mkdir -p /run/lock/subsys

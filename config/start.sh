@@ -14,3 +14,7 @@ while true; do
     fi
     sleep 1m
 done;
+echo "Verifique o nome do HOST no listener.ora e tnsnames.ora"
+grep HOST $ORACLE_HOME/network/admin/listener.ora
+grep HOST $ORACLE_HOME/network/admin/tnsnames.ora
+
