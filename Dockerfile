@@ -42,7 +42,7 @@ RUN /etc/init.d/oracle-xe configure responseFile=/u01/app/oracle/product/11.2.0/
 ADD config/start.sh /
 
 EXPOSE 1521
-EXPOSE 8080
+EXPOSE 8087
 
 # Java Version
 ENV JAVA_VERSION_MAJOR 8
@@ -102,6 +102,8 @@ WORKDIR /tmp
 RUN curl -O http://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz && tar -xzf apache-tomcat-${TOMCAT_VERSION}.tar.gz && mv apache-tomcat-${TOMCAT_VERSION}/* /usr/local/tomcat && ls -la /usr/local/tomcat && rm -rf apache-tomcat*
 
 RUN echo "Conteúdo do diretorio /etc e /etc/systemd " ; ls -lat /etc ; ls -lat /etc/systemd ;  ls -lat /etc/systemd/system/
+
+EXPOSE 8080
 
 ADD config/tomcat.service /etc/systemd/system/tomcat.service
 RUN ls -lat /etc/systemd/system/
