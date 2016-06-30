@@ -10,6 +10,7 @@ EXPOSE 80
 
 # Adding Oracle Install from oracle.com
 ADD rpm/* /tmp/
+# File was splited using: split -b 49000000 oracle-xe-11.2.0-1.0.x86_64.rpm
 RUN cd /tmp && cat xaa xab xac xad xae xaf xag > oracle-xe-11.2.0-1.0.x86_64.rpm && rm -rf xaa xab xac xad xae xaf xag
 
 # Pre-requirements
