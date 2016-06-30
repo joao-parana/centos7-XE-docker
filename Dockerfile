@@ -1,11 +1,13 @@
-FROM parana/centos7-docker
+FROM parana/centos7
 
 # Based on centos:7.2.1511 Public Image
 
 MAINTAINER "João Antonio Ferreira" <joao.parana@gmail.com>`
 
+ENV REFRESHED_AT 2016-06-30
+
 # Adding Apache web server
-RUN yum -y install httpd && systemctl enable httpd.service
+RUN yum -y update && yum -y install httpd && yum clean all && systemctl enable httpd.service
 EXPOSE 80
 
 # Adding Oracle Install from oracle.com
