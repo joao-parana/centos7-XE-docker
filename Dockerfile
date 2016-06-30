@@ -7,7 +7,8 @@ MAINTAINER "João Antonio Ferreira" <joao.parana@gmail.com>`
 ENV REFRESHED_AT 2016-06-30
 
 # Adding Apache web server
-RUN yum -y update && yum -y install httpd && yum clean all && systemctl enable httpd.service
+# RUN yum -y update && yum -y install httpd && yum clean all && systemctl enable httpd.service
+RUN yum -y install httpd && yum clean all && systemctl enable httpd.service
 EXPOSE 80
 
 # Adding Oracle Install from oracle.com
@@ -77,7 +78,24 @@ RUN curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" \
 
 # Set environment
 ENV JAVA_HOME /opt/jdk
-ENV PATH ${PATH}:${JAVA_HOME}/bin
+
+ENV CATALINA_HOME /usr/local/tomcat
+ENV PATH ${PATH}:${JAVA_HOME}/bin:${CATALINA_HOME}/bin:${CATALINA_HOME}/scripts
+
+ENV TOMCAT_MAJOR_VERSION=8 \
+    TOMCAT_VERSION=8.0.36
+
+ENV JAVA_OPTS="-Xms512m -Xmx1024m"
+
+WORKDIR /tmp
+# http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz
+RUN curl -O http://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz && tar -xzf apache-tomcat-${TOMCAT_VERSION}.tar.gz && ls -la *
+
+# Create tomcat user
+RUN groupadd -r tomcat && \
+	useradd -g tomcat -d ${CATALINA_HOME} -s /sbin/nologin  -c "Tomcat user" tomcat && \
+	chown -R tomcat:tomcat ${CATALINA_HOME}
+
 
 RUN yum clean all
 
